@@ -61,6 +61,6 @@
 
   - name: Add user to secondary groups
     ansible.builtin.user:
-      name: "{{ ansible_env.USER }}"
+      name: "ian"
       groups: "vboxusers"    # Sometimes needed for VirtualBox USB to work
       append: true
