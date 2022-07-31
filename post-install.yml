@@ -49,7 +49,7 @@
         alias snin="sudo snap install"
         alias apin="sudo apt install"
         alias aps="apt-cache search"
-        alias upup="sudo apt update;sudo apt upgrade"
+        alias upup="sudo apt update && sudo apt upgrade"
       backup: yes
 
   - name: Add user to secondary groups
