@@ -1,0 +1,42 @@
+I knew nothing about Ansible this morning. But after reading some how-tos, various ebooks, 
+and more than a few man pages, I decided to jump in with both feet. This playbook
+and the associated inventory file are in YAML format, and were written to keep me from
+pulling out my remaining imaginary hair after breaking my Linux install for the umpteenth
+time by quickly reinstalling all my favorite packages.
+
+To use it, you do have to install ansible first using
+
+```sudo apt install ansible```
+then
+```ansible-galaxy collection install community.general```
+(The second piece is a plugin to make ansible talk to snap.)
+
+then run the playbook using
+ansible-playbook -K -i post-install-pkgs.yml post-install.yml
+
+post-install-pkgs.yml is an inventory file with applications grouped by installer type.
+In my case, apt, snap, and one I get from the web because it isn't available elsewhere. The
+all:, children:, and hosts: tags are all YAML/Ansible conventions that I don't reference
+but must exist for this thing to work. Don't ask me why yet. =P
+
+The post-install.yml file invokes sudo and calls apt to update and upgrade all installed 
+packages. It then checks to ensure that the inventory file is out there, then loops through
+each {{ item }} in the inventory {{ groups... }} and attempts to install them (if they
+aren't {{ state: present }} already. The state is omitted in the Snap section because
+present is arleady the default state.  It might be the default for Apt too. I didn't check.
+Lastly, the oddball application I can't get from a repo is downloaded and installed. If you
+call the deb= property with url that includes ://, it just assumes you want to download
+and install it.
+
+After everything is reinstalled and I've made a soothing cup of tea to go with my Xanax,
+the script adds a bunch of aliases to my ~/.bashrc file so that I never have to type 
+'sudo apt-get install' or 'sudo apt update && sudo apt upgrage' etc again. Because holy
+crap is the Linux command line long-winded.
+
+And lastly, it adds me to the vboxusers group because Oracle can't make up their GD minds
+about how to make USB devices work in virtual machines. >.<
+
+Feel free to download this stuff and make it your own. Or not! NSOMN.
+BTW - this passes the ansible-playbook --syntax-check -i post-install-pkgs.yml post-install.yml
+test, as well as the ansible-inventory -i post-install-pkgs.yml --list test. I'm using 
+Ansible 2.10.8, and I have no idea if it will work with anything before that.
