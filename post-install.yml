@@ -34,13 +34,6 @@
     with_items:
       - "{{ groups['pkgs_snap'] }}"
 
-  - name: Create App subfolder            #
-    file:
-      path: "/home/ian/Apps/{{ item }}"
-      state: directory
-    with_items:
-      - "{{ groups['pkgs_web'] }}"
-
   - name: Install web packages
     ansible.builtin.apt:                 # deb will attempt to download first if var has ://
       deb="{{ hostvars[item].server }}"  # hostvars needed to access inventory variable
