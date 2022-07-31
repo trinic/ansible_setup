@@ -28,18 +28,18 @@ each {{ item }} in the inventory {{ groups... }} and attempts to install them (i
 aren't {{ state: present }} already. The state is omitted in the Snap section because
 present is arleady the default state.  It might be the default for Apt too. I didn't check.
 Lastly, the oddball application I can't get from a repo is downloaded and installed. If you
-call the deb= property with url that includes ://, it just assumes you want to download
-and install it.
+call the deb= property with a url that includes ://, it just assumes you want to download
+and install it... 'cuz why not? The internet is pretty safe, right? 
 
 After everything is reinstalled and I've made a soothing cup of tea to go with my Xanax,
-the script adds a bunch of aliases to my ~/.bashrc file so that I never have to type 
-'sudo apt-get install' or 'sudo apt update && sudo apt upgrage' etc again. Because holy
-crap is the Linux command line long-winded.
+the script adds a bunch of aliases to my ~/.bashrc file so that I never have to type stuff 
+like 'sudo apt-get install' or 'sudo apt update && sudo apt upgrage' again. Because holy
+crap is the Linux command line long-winded sometimes.
 
 And lastly, it adds me to the vboxusers group because Oracle can't make up their GD minds
 about how to make USB devices work in virtual machines. >.<
 
-Feel free to download this stuff and make it your own. Or not! NSOMN.
+Feel free to download this stuff and make it your own. Or not! IDRC.
 BTW - this passes the ansible-playbook --syntax-check -i post-install-pkgs.yml post-install.yml
 test, as well as the ansible-inventory -i post-install-pkgs.yml --list test. I'm using 
 Ansible 2.10.8, and I have no idea if it will work with anything before that.
