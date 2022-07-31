@@ -6,9 +6,12 @@ time by quickly reinstalling all my favorite packages.
 
 To use it, you do have to install ansible first using
 
-```sudo apt install ansible```
+  sudo apt install ansible
+  
 then
-```ansible-galaxy collection install community.general```
+
+  ansible-galaxy collection install community.general
+  
 (The second piece is a plugin to make ansible talk to snap.)
 
 then run the playbook using
