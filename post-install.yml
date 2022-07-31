@@ -1,0 +1,66 @@
+---
+- name: Install my favorite applications
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+  - name: Update existing packages
+    apt:
+      name: "*"         # First, update cache and upgrade everything to latest
+      state: latest
+      update_cache: yes
+
+  - name: Check if file exists
+    stat:
+      path: post-install-pkgs.txt   # List of my favorite app package names
+    register: file_data
+
+  - name: Report if file doesn't exist
+    debug:
+      msg: "The file post-install-pkgs.txt doesn't exist!"
+    when: not file_data.stat.exists
+
+  - name: Install my applications
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "{{ groups['pkgs_apt'] }}"
+
+  - name: Install my snap applications
+    community.general.snap:
+      name: "{{ item }}"
+    with_items:
+      - "{{ groups['pkgs_snap'] }}"
+
+  - name: Create App subfolder            #
+    file:
+      path: "/home/ian/Apps/{{ item }}"
+      state: directory
+    with_items:
+      - "{{ groups['pkgs_web'] }}"
+
+  - name: Install web packages
+    ansible.builtin.apt:                 # deb will attempt to download first if var has ://
+      deb="{{ hostvars[item].server }}"  # hostvars needed to access inventory variable
+    with_items:
+      - "{{ groups['pkgs_web'] }}"
+
+  - name: Ansible Insert multiple lines using blockinfile
+    ansible.builtin.blockinfile:
+      dest: ~/.bashrc     # My preferred terminal shortcuts and settings
+      block: |
+        export LC_ALL="C"
+        alias ls="ls -hal --group-directories-first"
+        alias snin="sudo snap install"
+        alias apin="sudo apt install"
+        alias aps="apt-cache search"
+        alias upup="sudo apt update;sudo apt upgrade"
+      backup: yes
+
+  - name: Add user to secondary groups
+    ansible.builtin.user:
+      name: "{{ ansible_env.USER }}"
+      groups: "vboxusers"    # Sometimes needed for VirtualBox USB to work
+      append: true

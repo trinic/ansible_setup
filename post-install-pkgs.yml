@@ -1,0 +1,36 @@
+all:
+  children:
+    pkgs_apt:
+      hosts:
+        brscan5: {}
+        cherrytree: {}
+        clementine: {}
+        flashprint5: {}
+        gamemode-daemon: {}
+        gamemode: {}
+        glogg: {}
+        handbrake: {}
+        htop: {}
+        libreoffice: {}
+        okular: {}
+        playonlinux: {}
+        putty: {}
+        scribus-template: {}
+        scribus: {}
+        steam: {}
+        ttf-mscorefonts-installer: {}
+        virtualbox-ext-pack: {}
+        virtualbox-guest-additions-iso: {}
+        virtualbox: {}
+        vlc: {}
+        wine-stable: {}
+        zoom: {}
+    pkgs_snap:
+      hosts:
+        brave: {}
+        photoscape: {}
+    ungrouped: {}
+    pkgs_web:
+      hosts:
+        rainlendar:
+          server: "https://www.rainlendar.net/download/2.18.0/rainlendar2-pro_2.18.0.b171-1_amd64.deb"
