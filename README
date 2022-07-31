@@ -12,22 +12,26 @@ then
 
   ansible-galaxy collection install community.general
   
-(The second piece includes a plugin to make ansible talk to snap.)
+  (This collection includes a plugin to make ansible talk to snap.)
 
 then run the playbook using
   
   ansible-playbook -K -i post-install-pkgs.yml post-install.yml
 
+The -K option prompts for your password because installing stuff needs sudo, and the -i
+option specifies a particular inventory file (post-install-pkgs.yml) to be fed to the 
+playbook (post-install.yml).
+
 post-install-pkgs.yml is an inventory file with applications grouped by installer type.
 In my case, apt, snap, and one I get from the web because it isn't available elsewhere. The
-all:, children:, and hosts: tags are all YAML/Ansible conventions that I don't reference
-but must exist for this thing to work. Don't ask me why yet. =P
+all:, children:, hosts:, and ungrouped: tags are all YAML/Ansible conventions that I don't 
+reference but must exist for this thing to work. Don't ask me why yet. =P
 
 The post-install.yml file invokes sudo and calls apt to update and upgrade all installed 
 packages. It then checks to ensure that the inventory file is out there, then loops through
-each {{ item }} in the inventory {{ groups... }} and attempts to install them (if they
+each {{ item }} in the inventory {{ groups... }} and attempts to install each package (if they
 aren't {{ state: present }} already. The state is omitted in the Snap section because
-present is arleady the default state.  It might be the default for Apt too. I didn't check.
+'present' is the default state.  It might be the default for Apt too. I didn't check.
 Lastly, the oddball application I can't get from a repo is downloaded and installed. If you
 call the deb= property with a url that includes ://, it just assumes you want to download
 and install it... 'cuz why not? The internet is pretty safe, right? 
@@ -43,4 +47,5 @@ about how to make USB devices work in virtual machines. >.<
 Feel free to download this stuff and make it your own. Or not! IDRC.
 BTW - this passes the ansible-playbook --syntax-check -i post-install-pkgs.yml post-install.yml
 test, as well as the ansible-inventory -i post-install-pkgs.yml --list test. I'm using 
-Ansible 2.10.8, and I have no idea if it will work with anything before that.
+Ansible 2.10.8, and I have no idea if it will work with anything before that, so use at your
+own risk.
