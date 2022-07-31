@@ -18,7 +18,7 @@
 
   - name: Report if file doesn't exist
     debug:
-      msg: "The file post-install-pkgs.txt doesn't exist!"
+      msg: "The file post-install-pkgs.yml doesn't exist!"
     when: not file_data.stat.exists
 
   - name: Install my applications
