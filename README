@@ -12,7 +12,7 @@ then
 
   ansible-galaxy collection install community.general
   
-(The second piece is a plugin to make ansible talk to snap.)
+(The second piece includes a plugin to make ansible talk to snap.)
 
 then run the playbook using
 ansible-playbook -K -i post-install-pkgs.yml post-install.yml
