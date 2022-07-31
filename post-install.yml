@@ -13,7 +13,7 @@
 
   - name: Check if file exists
     stat:
-      path: post-install-pkgs.txt   # List of my favorite app package names
+      path: post-install-pkgs.yml   # List of my favorite app package names
     register: file_data
 
   - name: Report if file doesn't exist
