@@ -1,23 +1,23 @@
 ---
 - name: Install my favorite applications
   hosts: localhost
-  become: yes
+  become: true
   become_method: sudo
-  gather_facts: no
+  gather_facts: false
   tasks:
   - name: Update existing packages
-    apt:
+    ansible.builtin.apt:
       name: "*"         # First, update cache and upgrade everything to latest
       state: latest
-      update_cache: yes
+      update_cache: true
 
   - name: Check if file exists
-    stat:
+    ansible.builtin.stat:
       path: post-install-pkgs.yml   # List of my favorite app package names
     register: file_data
 
   - name: Report if file doesn't exist
-    debug:
+    ansible.builtin.debug:
       msg: "The file post-install-pkgs.yml doesn't exist!"
     when: not file_data.stat.exists
 
@@ -35,9 +35,10 @@
       - "{{ groups['pkgs_snap'] }}"
 
   - name: Create App subfolder            #
-    file:
+    ansible.builtin.file:
       path: "/home/ian/Apps/{{ item }}"
       state: directory
+      mode: 0775  # equivalent to ou+rwx g+rx
     with_items:
       - "{{ groups['pkgs_web'] }}"
 
@@ -57,7 +58,7 @@
         alias apin="sudo apt install"
         alias aps="apt-cache search"
         alias upup="sudo apt update;sudo apt upgrade"
-      backup: yes
+      backup: true
 
   - name: Add user to secondary groups
     ansible.builtin.user:
