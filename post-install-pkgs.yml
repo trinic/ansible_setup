@@ -2,10 +2,9 @@ all:
   children:
     pkgs_apt:
       hosts:
-        brscan5: {}
+        ttf-mscorefonts-installer: {}
         cherrytree: {}
         clementine: {}
-        flashprint5: {}
         gamemode-daemon: {}
         gamemode: {}
         glogg: {}
@@ -13,18 +12,17 @@ all:
         htop: {}
         libreoffice: {}
         okular: {}
-        playonlinux: {}
         putty: {}
-        scribus-template: {}
         scribus: {}
+        scribus-template: {}
+        signal: {}
         steam: {}
-        ttf-mscorefonts-installer: {}
+        virtualbox: {}
         virtualbox-ext-pack: {}
         virtualbox-guest-additions-iso: {}
-        virtualbox: {}
         vlc: {}
         wine-stable: {}
-        zoom: {}
+        playonlinux: {}
     pkgs_snap:
       hosts:
         brave: {}
@@ -34,3 +32,10 @@ all:
       hosts:
         rainlendar:
           server: "https://www.rainlendar.net/download/2.18.0/rainlendar2-pro_2.18.0.b171-1_amd64.deb"
+        zoom:
+          server: "https://zoom.us/client/latest/zoom_amd64.deb"
+        flashprint:
+          server: "https://en.fss.flashforge.com/10000/software/269af4512c7abc085e964644a2b744f3.deb"
+        # brscan:
+        #   server: "https://support.brother.com/g/b/downloadend.aspx?c=us&lang=en&prod=ds640_us_eu_as&os=128&dlid=dlf104034_000&flang=4&type3=565"
+        # This had to be removed because you must agree to terms in order to download. =(

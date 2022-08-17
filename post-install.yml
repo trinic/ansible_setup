@@ -34,6 +34,13 @@
     with_items:
       - "{{ groups['pkgs_snap'] }}"
 
+  - name: Create App subfolder            #
+    file:
+      path: "/home/ian/Apps/{{ item }}"
+      state: directory
+    with_items:
+      - "{{ groups['pkgs_web'] }}"
+
   - name: Install web packages
     ansible.builtin.apt:                 # deb will attempt to download first if var has ://
       deb="{{ hostvars[item].server }}"  # hostvars needed to access inventory variable
@@ -49,11 +56,11 @@
         alias snin="sudo snap install"
         alias apin="sudo apt install"
         alias aps="apt-cache search"
-        alias upup="sudo apt update && sudo apt upgrade"
+        alias upup="sudo apt update;sudo apt upgrade"
       backup: yes
 
   - name: Add user to secondary groups
     ansible.builtin.user:
-      name: "ian"
+      name: "{{ ansible_env.USER }}"
       groups: "vboxusers"    # Sometimes needed for VirtualBox USB to work
       append: true
